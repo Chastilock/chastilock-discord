@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  chastilock-discord:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: chastilock-discord
+    container_name: chastilock-discord
+    restart: unless-stopped
+    environment:
+      - DATABASE=mysql://mysql_user:mysql_password@db/chastilock
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  node_modules:
